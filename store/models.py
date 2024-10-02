@@ -4,12 +4,6 @@ from uuid import uuid4
 # Create your models here.
 
 
-
-class Promotion(models.Model):
-    description = models.TextField()
-    discount = models.FloatField()
-
-
 class Category(models.Model):
     title = models.CharField(max_length=255)
 
@@ -24,8 +18,12 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='products')
     stock_quantity = models.IntegerField()
     created_date = models.DateField(auto_now=True)
-    imageurl = models.URLField()
-    promotions = models.ManyToManyField(Promotion)
+    imageurl = models.URLField(max_length=255, null=True)
+    discount = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True, default=0)
+
+
+class User(AbstractUser):
+    email = models.EmailField(unique=True)
 
 
 class Customer(models.Model):
@@ -38,12 +36,28 @@ class Customer(models.Model):
         (MEMBERSHIP_SILVER, 'Silver'),
         (MEMBERSHIP_GOLD, 'Gold')
     ]
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
-    email = models.EmailField(unique=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone = models.CharField(max_length=255, null=True)
     birth_date = models.DateField(null=True)
     membership = models.CharField(max_length=1, choices=MEMBERSHIP_CHOICES, default=MEMBERSHIP_BRONZE)
+
+    @property
+    def first_name(self):
+        return self.user.first_name
+    
+    @property
+    def last_name(self):
+        return self.user.last_name
+    
+    @property
+    def email(self):
+        return self.user.email
+
+
+class Address(models.Model):
+    street = models.CharField(max_length=255)
+    city = models.CharField(max_length=255)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='addresses')
 
 
 class WishedItem(models.Model):
@@ -59,16 +73,6 @@ class Review(models.Model):
     date = models.DateField(auto_now_add=True)
 
 
-class Address(models.Model):
-    street = models.CharField(max_length=255)
-    city = models.CharField(max_length=255)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='addresses')
-
-
-class User(AbstractUser):
-    email = models.EmailField(unique=True)
-    
-
 class Order(models.Model):
     PAYMENT_STATUS_PENDING = 'P'
     PAYMENT_STATUS_COMPLETE = 'C'
@@ -83,12 +87,20 @@ class Order(models.Model):
     payment_status = models.CharField(max_length=1, choices=PAYMENT_STATUS_CHOICES, default=PAYMENT_STATUS_PENDING)
     customer = models.ForeignKey(Customer, on_delete=models.PROTECT, related_name='orders')
 
+    @property
+    def total_price(self):
+        return sum(item.quantity * item.unit_price for item in self.items.all())
+    
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.PROTECT, related_name='items')
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
     quantity = models.PositiveSmallIntegerField()
     unit_price = models.DecimalField(max_digits=6, decimal_places=2)
+
+    @property
+    def total_price(self):
+        return self.quantity * self.unit_price
 
 
 class Cart(models.Model):

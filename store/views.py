@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import Product, Category, User
 from django.http.response import HttpResponse
-from .models import Promotion, Category, Product, Customer, WishedItem, Review, Address, User, Order, OrderItem, Cart, CartItem 
+from .models import Category, Product, Customer, WishedItem, Review, Address, User, Order, OrderItem, Cart, CartItem 
 
 # Create your views here.
 
