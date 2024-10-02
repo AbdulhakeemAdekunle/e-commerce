@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import AbstractUser
 from uuid import uuid4
 # Create your models here.
@@ -20,6 +21,9 @@ class Product(models.Model):
     created_date = models.DateField(auto_now=True)
     imageurl = models.URLField(max_length=255, null=True)
     discount = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True, default=0)
+
+    def __str__(self):
+        return self.name
 
     @property
     def discounted_price(self):
@@ -74,9 +78,11 @@ class WishedItem(models.Model):
 
 
 class Review(models.Model):
-    description = models.TextField()
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
+    summary = models.CharField(max_length=255)
+    details = models.TextField(null=True, blank=True)
+    rating = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
     date = models.DateField(auto_now_add=True)
 
 

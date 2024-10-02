@@ -1,0 +1,15 @@
+insert into store_category (id, title) values (1, 'Computers');
+insert into store_category (id, title) values (2, 'Automotive');
+insert into store_category (id, title) values (3, 'Health');
+insert into store_category (id, title) values (4, 'Industrial');
+insert into store_category (id, title) values (5, 'Kids');
+insert into store_category (id, title) values (6, 'Garden');
+insert into store_category (id, title) values (7, 'Jewelry');
+insert into store_category (id, title) values (8, 'Clothing');
+insert into store_category (id, title) values (9, 'Shoes');
+insert into store_category (id, title) values (10, 'Computers');
+insert into store_category (id, title) values (11, 'Outdoors');
+insert into store_category (id, title) values (12, 'Industrial');
+insert into store_category (id, title) values (13, 'Beauty');
+insert into store_category (id, title) values (14, 'Clothing');
+insert into store_category (id, title) values (15, 'Sports');
