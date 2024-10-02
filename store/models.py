@@ -21,6 +21,13 @@ class Product(models.Model):
     imageurl = models.URLField(max_length=255, null=True)
     discount = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True, default=0)
 
+    @property
+    def discounted_price(self):
+        if self.discount:
+            discount_factor = (100 - float(self.discount))/100
+            return round(self.price * discount_factor, 2)
+        return self.price
+
 
 class User(AbstractUser):
     email = models.EmailField(unique=True)
