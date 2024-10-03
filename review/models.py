@@ -11,7 +11,7 @@ class ReviewedProductManager(models.Manager):
     def get_reviews_for(self, obj_type, obj_id):
         content_type = ContentType.objects.get_for_model(obj_type)
 
-        return ReviewedProduct.objects\
+        return ReviewedItem.objects\
             .select_related(Review)\
             .filter(
                 content_type=content_type, object_id=obj_id

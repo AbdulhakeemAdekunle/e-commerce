@@ -1,3 +1,4 @@
+from typing import Iterable
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import AbstractUser
@@ -10,14 +11,17 @@ class Category(models.Model):
 
     def __str__(self):
         return self.title
+    
+    class Meta:
+        ordering = ['title']
 
 
 class Product(models.Model):
     name = models.CharField(max_length=255)
-    description = models.TextField()
-    price = models.DecimalField(max_digits=6, decimal_places=2)
+    description = models.TextField(null=True, blank=True)
+    price = models.DecimalField(max_digits=6, decimal_places=2, validators=[MinValueValidator(1)])
     category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='products')
-    stock_quantity = models.IntegerField()
+    stock_quantity = models.IntegerField(validators=[MinValueValidator(0)])
     created_date = models.DateField(auto_now=True)
     imageurl = models.URLField(max_length=255, null=True)
     discount = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True, default=0)
@@ -63,7 +67,10 @@ class Customer(models.Model):
     @property
     def email(self):
         return self.user.email
-
+    
+    def __str__(self):
+        return f'{self.user.first_name} {self.user.last_name}'
+    
 
 class Address(models.Model):
     street = models.CharField(max_length=255)
@@ -104,16 +111,21 @@ class Order(models.Model):
     def total_price(self):
         return sum(item.quantity * item.unit_price for item in self.items.all())
     
-
+    
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.PROTECT, related_name='items')
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
     quantity = models.PositiveSmallIntegerField()
-    unit_price = models.DecimalField(max_digits=6, decimal_places=2)
+    unit_price = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
 
     @property
     def total_price(self):
         return self.quantity * self.unit_price
+    
+    def save(self,*args, **kwargs) -> None:
+        if self.unit_price is None:
+            self.unit_price = self.product.price
+        super().save(*args, **kwargs)
 
 
 class Cart(models.Model):
