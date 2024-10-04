@@ -26,6 +26,9 @@ class ProductAdmin(admin.ModelAdmin):
         if product.stock_quantity < 10:
             return 'Low'
         return 'OK'
+    
+    def get_queryset(self, request: HttpRequest) -> QuerySet:
+        return super().get_queryset(request).select_related('category')
 
 
 @admin.register(models.Category)
@@ -41,7 +44,7 @@ class CategoryAdmin(admin.ModelAdmin):
     def get_queryset(self, request: HttpRequest) -> QuerySet:
         return super().get_queryset(request).annotate(
             products_count=Count('products')
-        )
+        ).prefetch_related('products')
 
 
 @admin.register(models.Customer)
@@ -60,13 +63,15 @@ class CustomerAdmin(admin.ModelAdmin):
     def get_queryset(self, request: HttpRequest) -> QuerySet:
         return super().get_queryset(request).annotate(
             orders_count = Count('orders')
-        )
+        ).select_related('user')\
+        .prefetch_related('orders')
 
 
 @admin.register(models.User)
 class UserAdmin(admin.ModelAdmin):
     list_display = ['first_name', 'last_name', 'email', 'is_staff', 'is_active']
     list_editable = ['is_active', 'is_staff']
+    list_filter = ['is_staff', 'is_active']
     search_fields = ['first_name']
 
 
