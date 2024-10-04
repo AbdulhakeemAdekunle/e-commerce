@@ -24,7 +24,7 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='products')
     stock_quantity = models.IntegerField(validators=[MinValueValidator(0)])
     created_date = models.DateField(auto_now=True)
-    imageurl = models.URLField(max_length=255, null=True)
+    imageurl = models.URLField(max_length=255, null=True, blank=True)
     discount = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True, default=0)
 
     def __str__(self):
