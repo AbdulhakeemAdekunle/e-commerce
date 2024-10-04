@@ -8,18 +8,20 @@ from .serializers import ProductSerializer, CategorySerializer, CreateCategorySe
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.views import APIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from pprint import pprint
 
 # Create your views here.
 
-class ProductList(APIView):
-    def get(self, request):
-        query = request.query_params.get('q', None)
-        category_title = request.query_params.get('category', None)
-        min_price = request.query_params.get('min_price', None)
-        max_price = request.query_params.get('max_price', None)
-        stock_avail = request.query_params.get('in_stock', None)
+class ProductList(ListCreateAPIView):
+    serializer_class = ProductSerializer
+
+    def get_queryset(self):
+        query = self.request.query_params.get('q', None)
+        category_title = self.request.query_params.get('category', None)
+        min_price = self.request.query_params.get('min_price', None)
+        max_price = self.request.query_params.get('max_price', None)
+        stock_avail = self.request.query_params.get('in_stock', None)
         products = Product.objects.select_related('category').all()
         
         if query:
@@ -33,71 +35,36 @@ class ProductList(APIView):
         
         if stock_avail:
             products = products.filter(stock_quantity__gt=0)
-
-        serializer = ProductSerializer(products, many=True)
-        return Response(serializer.data)
-
-    def post(self, request):
-        serializer = ProductSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return products
 
 
-class ProductDetail(APIView):
-    def get(self, request, id):
-        product = get_object_or_404(Product, pk=id)
-        serializer = ProductSerializer(product)
-        return Response(serializer.data)
-    
-    def put(self, request, id):
-        product = get_object_or_404(Product, pk=id)
-        serializer = ProductSerializer(product, data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-    
-    def delete(self, request, id):
-        product = get_object_or_404(Product, pk=id)
+class ProductDetail(RetrieveUpdateDestroyAPIView):
+    queryset = Product.objects.select_related('category').all()
+    serializer_class = ProductSerializer
+
+    def destroy(self, request, *args, **kwargs):
+        product = Product.objects.get(pk=self.kwargs['pk'])
         if product.ordered.count() > 0:
             return Response({'error': 'Cannot delete this product because it is associated with an existing order'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
+        return super().destroy(request, *args, **kwargs)
         
 
-class CategoryList(APIView):
-    def get(self, request):
-        categories = Category.objects.all().\
-            annotate(products_count=Count('products'))
-        serializer = CategorySerializer(categories, many=True)
-        return Response(serializer.data)
-    
-    def post(self, request):
-        serializer = CategorySerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+class CategoryList(ListCreateAPIView):
+    queryset = Category.objects.all().annotate(
+        products_count=Count('products')
+    )
+    serializer_class = CategorySerializer
 
 
-class CategoryDetail(APIView):
-    def get(self, request, id):
+class CategoryDetail(RetrieveUpdateDestroyAPIView):
+    queryset = Category.objects.all().annotate(
+        products_count=Count('products')
+    )
+    serializer_class = CategorySerializer
+
+    def destroy(self, request, *args, **kwargs):
         category = get_object_or_404(Category.objects.all().\
-            annotate(products_count=Count('products')), pk=id)
-        serializer = CategorySerializer(category)
-        return Response(serializer.data)
-    
-    def put(self, request, id):
-        category = get_object_or_404(Category.objects.all().\
-            annotate(products_count=Count('products')), pk=id)
-        serializer = CategorySerializer(category, data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data)
-    
-    def delete(self, request, id):
-        category = get_object_or_404(Category.objects.all().\
-            annotate(products_count=Count('products')), pk=id)
+            annotate(products_count=Count('products')), pk=self.kwargs['pk'])
         if category.products.count() > 0:
             return Response({'error':'Can not delete category because it has one or more products'})
-        category.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return super().destroy(request, *args, **kwargs)
