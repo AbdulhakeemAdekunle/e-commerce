@@ -1,19 +1,18 @@
 from django.shortcuts import render, get_object_or_404
 from django.db import transaction
-from django.db.models import ProtectedError, Count
-from django.http.response import HttpResponse
-from django.contrib.contenttypes.models import ContentType
-from .models import Category, Product, Customer, Order, OrderItem
-from .serializers import ProductSerializer, CategorySerializer, CreateCategorySerializer
+from django.db.models import Count
+from django_filters.rest_framework import DjangoFilterBackend
+from .models import Category, Product, Review, Customer, Order, OrderItem
+from .serializers import ProductSerializer, CategorySerializer, ReviewSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.viewsets import ModelViewSet
 from pprint import pprint
 
 # Create your views here.
 
-class ProductList(ListCreateAPIView):
+class ProductViewSet(ModelViewSet):
     serializer_class = ProductSerializer
 
     def get_queryset(self):
@@ -37,11 +36,6 @@ class ProductList(ListCreateAPIView):
             products = products.filter(stock_quantity__gt=0)
         return products
 
-
-class ProductDetail(RetrieveUpdateDestroyAPIView):
-    queryset = Product.objects.select_related('category').all()
-    serializer_class = ProductSerializer
-
     def destroy(self, request, *args, **kwargs):
         product = Product.objects.get(pk=self.kwargs['pk'])
         if product.ordered.count() > 0:
@@ -49,14 +43,7 @@ class ProductDetail(RetrieveUpdateDestroyAPIView):
         return super().destroy(request, *args, **kwargs)
         
 
-class CategoryList(ListCreateAPIView):
-    queryset = Category.objects.all().annotate(
-        products_count=Count('products')
-    )
-    serializer_class = CategorySerializer
-
-
-class CategoryDetail(RetrieveUpdateDestroyAPIView):
+class CategoryViewSet(ModelViewSet):
     queryset = Category.objects.all().annotate(
         products_count=Count('products')
     )
@@ -68,3 +55,18 @@ class CategoryDetail(RetrieveUpdateDestroyAPIView):
         if category.products.count() > 0:
             return Response({'error':'Can not delete category because it has one or more products'})
         return super().destroy(request, *args, **kwargs)
+    
+
+class ReviewViewSet(ModelViewSet):
+    serializer_class = ReviewSerializer
+
+    def get_queryset(self):
+        product_id = self.kwargs.get('product_pk', None)
+        reviews_list = Review.objects.all()
+        if product_id:
+            reviews = Review.objects.filter(product_id=product_id)
+            return reviews
+        return reviews_list
+
+    def get_serializer_context(self):
+        return {'product_id': self.kwargs['product_pk']}

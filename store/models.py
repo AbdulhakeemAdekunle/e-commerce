@@ -93,6 +93,9 @@ class Review(models.Model):
     rating = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
     date = models.DateField(auto_now_add=True)
 
+    def __str__(self) -> str:
+        return f'{self.summary}'
+
 
 class Order(models.Model):
     PAYMENT_STATUS_PENDING = 'P'

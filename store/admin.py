@@ -69,7 +69,7 @@ class CustomerAdmin(admin.ModelAdmin):
 
 @admin.register(models.User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ['first_name', 'last_name', 'email', 'is_staff', 'is_active']
+    list_display = ['id','first_name', 'last_name', 'email', 'is_staff', 'is_active']
     list_editable = ['is_active', 'is_staff']
     list_filter = ['is_staff', 'is_active']
     search_fields = ['first_name']
