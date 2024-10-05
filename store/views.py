@@ -14,6 +14,8 @@ from pprint import pprint
 
 class ProductViewSet(ModelViewSet):
     serializer_class = ProductSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['category_id']
 
     def get_queryset(self):
         query = self.request.query_params.get('q', None)
