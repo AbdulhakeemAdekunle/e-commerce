@@ -1,42 +1,27 @@
-from django.shortcuts import render, get_object_or_404
 from django.db import transaction
 from django.db.models import Count
+from django.shortcuts import render, get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
-from .models import Category, Product, Review, Customer, Order, OrderItem
-from .serializers import ProductSerializer, CategorySerializer, ReviewSerializer
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet, GenericViewSet
+from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin, DestroyModelMixin
+from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework import status
-from rest_framework.viewsets import ModelViewSet
-from pprint import pprint
+from .models import Category, Product, Review, Cart, CartItem, Order, OrderItem
+from .serializers import ProductSerializer, CategorySerializer, ReviewSerializer, CartSerializer, CartItemSerializer, AddCartItemSerializer, UpdateCartItemSerializer
+from .filters import ProductFilter
+from .paginations import DefaultPagination
 
 # Create your views here.
 
 class ProductViewSet(ModelViewSet):
     serializer_class = ProductSerializer
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['category_id']
-
-    def get_queryset(self):
-        query = self.request.query_params.get('q', None)
-        category_title = self.request.query_params.get('category', None)
-        min_price = self.request.query_params.get('min_price', None)
-        max_price = self.request.query_params.get('max_price', None)
-        stock_avail = self.request.query_params.get('in_stock', None)
-        products = Product.objects.select_related('category').all()
-        
-        if query:
-            products = products.filter(name__icontains=query)
-
-        if category_title:
-            products = products.filter(category__title=category_title)
-
-        if min_price and max_price:
-            products = products.filter(price__gte=min_price, price__lte=max_price)
-        
-        if stock_avail:
-            products = products.filter(stock_quantity__gt=0)
-        return products
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_class = ProductFilter
+    pagination_class = DefaultPagination
+    search_fields = ['name', 'category__title']
+    ordering_fields = ['price', 'stock_quantity']
+    queryset = Product.objects.all()
 
     def destroy(self, request, *args, **kwargs):
         product = Product.objects.get(pk=self.kwargs['pk'])
@@ -46,13 +31,13 @@ class ProductViewSet(ModelViewSet):
         
 
 class CategoryViewSet(ModelViewSet):
-    queryset = Category.objects.all().annotate(
-        products_count=Count('products')
-    )
+    queryset = Category.objects.all().annotate(products_count=Count('products'))
     serializer_class = CategorySerializer
+    pagination_class = DefaultPagination
 
     def destroy(self, request, *args, **kwargs):
-        category = get_object_or_404(Category.objects.all().\
+        category = get_object_or_404(
+            Category.objects.all().\
             annotate(products_count=Count('products')), pk=self.kwargs['pk'])
         if category.products.count() > 0:
             return Response({'error':'Can not delete category because it has one or more products'})
@@ -72,3 +57,35 @@ class ReviewViewSet(ModelViewSet):
 
     def get_serializer_context(self):
         return {'product_id': self.kwargs['product_pk']}
+    
+
+class CartViewSet(CreateModelMixin, RetrieveModelMixin, DestroyModelMixin, GenericViewSet):
+    queryset = Cart.objects.prefetch_related('items__product').all()
+    serializer_class = CartSerializer
+
+    def destroy(self, request, pk):
+        cart = Cart.objects.get(pk=pk)
+        if cart.items.count() > 0:
+            return Response({'error': 'Can not delete this cart because it contains some items'})
+        cart.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class CartItemViewSet(ModelViewSet):
+    http_method_names = ['get', 'post', 'patch', 'delete']
+    serializer_class = CartItemSerializer
+
+    def get_serializer_class(self):
+    
+        if self.request.method == 'POST':
+            return AddCartItemSerializer
+        elif self.request.method == 'PATCH':
+            return UpdateCartItemSerializer
+        return CartItemSerializer
+
+    def get_queryset(self):
+        cart_id = self.kwargs['cart_pk']
+        return CartItem.objects.select_related('product').filter(cart_id=cart_id)
+    
+    def get_serializer_context(self):
+        return {'cart_id': self.kwargs['cart_pk']}
