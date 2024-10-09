@@ -9,5 +9,4 @@ class ProductFilter(FilterSet):
             'price': ['gte', 'lte'],
             'stock_quantity': ['gt', 'lt']
         }
-
-    
+        

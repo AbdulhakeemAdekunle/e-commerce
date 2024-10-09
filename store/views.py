@@ -4,17 +4,19 @@ from django.shortcuts import render, get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
-from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin, DestroyModelMixin
+from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin, DestroyModelMixin, UpdateModelMixin
 from rest_framework.filters import SearchFilter, OrderingFilter
-from rest_framework import status
-from .models import Category, Product, Review, Cart, CartItem, Order, OrderItem
-from .serializers import ProductSerializer, CategorySerializer, ReviewSerializer, CartSerializer, CartItemSerializer, AddCartItemSerializer, UpdateCartItemSerializer
+from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
+from rest_framework import status, generics
+from .models import Category, Product, Review, Cart, CartItem, Customer, User, Order, OrderItem
 from .filters import ProductFilter
 from .paginations import DefaultPagination
+from .serializers import ProductSerializer, CreateProductSerializer, UpdateProductSerializer, CategorySerializer, ReviewSerializer, CartSerializer, CartItemSerializer, AddCartItemSerializer, UpdateCartItemSerializer, CustomerSerializer, UserSerializer, RegisterSerializer
 
 # Create your views here.
 
 class ProductViewSet(ModelViewSet):
+    http_method_names = ['get', 'patch', 'post', 'delete']
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_class = ProductFilter
@@ -28,7 +30,19 @@ class ProductViewSet(ModelViewSet):
         if product.ordered.count() > 0:
             return Response({'error': 'Cannot delete this product because it is associated with an existing order'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
         return super().destroy(request, *args, **kwargs)
-        
+    
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return CreateProductSerializer
+        elif self.request.method == 'PATCH':
+            return UpdateProductSerializer
+        elif self.request.method == 'GET':
+            return ProductSerializer
+    
+    def get_permissions(self):
+        if self.request.method in ['POST', 'PATCH', 'DELETE']:
+            return [IsAdminUser()]
+        return [IsAuthenticated()]
 
 class CategoryViewSet(ModelViewSet):
     queryset = Category.objects.all().annotate(products_count=Count('products'))
@@ -89,3 +103,20 @@ class CartItemViewSet(ModelViewSet):
     
     def get_serializer_context(self):
         return {'cart_id': self.kwargs['cart_pk']}
+    
+
+class CustomerViewSet(CreateModelMixin, RetrieveModelMixin, UpdateModelMixin, GenericViewSet):
+    queryset = Customer.objects.all()
+    serializer_class = CustomerSerializer
+    # permission_classes = [IsAuthenticated]
+
+
+class UserViewSet(ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class RegisterView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    permission_classes = [AllowAny]
+    serializer_class = RegisterSerializer

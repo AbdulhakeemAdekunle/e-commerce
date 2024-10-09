@@ -40,7 +40,7 @@ class Product(models.Model):
 
 class User(AbstractUser):
     email = models.EmailField(unique=True)
-
+    
 
 class Customer(models.Model):
     MEMBERSHIP_BRONZE = 'B'

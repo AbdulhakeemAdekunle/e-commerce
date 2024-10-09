@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -41,8 +42,9 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'django_filters',
     'rest_framework',
+    'rest_framework.authtoken',
     'store',
-    'review'
+    'review',
 ]
 
 INTERNAL_IPS = [
@@ -137,8 +139,16 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'store.User'
+AUTH_USER_MODEL = 'auth.User'
 
 REST_FRAMEWORK = {
     'COERCE_DECIMAL_TO_STRING': False,
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
+
+SIMPLE_JWT = {
+   'AUTH_HEADER_TYPES': ('JWT',),
+   "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
 }
