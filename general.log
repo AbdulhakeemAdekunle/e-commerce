@@ -1,0 +1,11 @@
+Watching for file changes with StatReloader
+/home/abdulhakeem/alx/project/django/e-commerce/manage.py changed, reloading.
+Watching for file changes with StatReloader
+/home/abdulhakeem/alx/project/django/e-commerce/manage.py changed, reloading.
+Watching for file changes with StatReloader
+/home/abdulhakeem/alx/project/django/e-commerce/e_commerce/wsgi.py changed, reloading.
+Watching for file changes with StatReloader
+2024-10-14 14:25:35,726 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader
+2024-10-14 14:25:41,030 (WARNING) - django.request - Not Found: /favicon.ico
+2024-10-14 14:35:41,141 (WARNING) - django.request - Not Found: /
+2024-10-14 14:40:39,396 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader

@@ -1,6 +1,5 @@
 from typing import Any
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.db.models import F
 from django.db.models.aggregates import Count, Sum
 from django.db.models.query import QuerySet
@@ -66,23 +65,6 @@ class CustomerAdmin(admin.ModelAdmin):
             orders_count = Count('orders')
         ).select_related('user')\
         .prefetch_related('orders')
-
-
-@admin.register(models.User)
-class UserAdmin(BaseUserAdmin):
-    add_fieldsets = (
-        (
-            None,
-            {
-                "classes": ("wide",),
-                "fields": ("username", "usable_password", "password1", "password2", 'email', 'first_name', 'last_name'),
-            },
-        ),
-    )
-    list_display = ['id','first_name', 'last_name', 'email', 'is_staff', 'is_active']
-    list_editable = ['is_active', 'is_staff']
-    list_filter = ['is_staff', 'is_active']
-    search_fields = ['first_name']
 
 
 class OrderItemInline(admin.TabularInline):

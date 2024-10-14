@@ -1,10 +1,8 @@
 from decimal import Decimal
 from django.db.models import Count
-from django.conf import settings
-from django.contrib.auth.password_validation import validate_password
 from rest_framework.validators import UniqueValidator
 from rest_framework import serializers
-from .models import Product, Category, Review, Cart, CartItem, Customer, User
+from .models import Product, Category, Review, Cart, CartItem, Customer, ProductImage
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -20,10 +18,21 @@ class CreateCategorySerializer(serializers.ModelSerializer):
         fields = ['title']
 
 
+class ProductImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductImage
+        fields = ['id', 'image']
+
+    def create(self, validated_data):
+        product_id = self.context['product_id']
+        return ProductImage.objects.create(product_id=product_id, **validated_data)
+    
+
 class ProductSerializer(serializers.ModelSerializer):
+    images = ProductImageSerializer(many=True)
     class Meta:
         model = Product
-        fields = ['id', 'name', 'price', 'description', 'stock_quantity', 'category']
+        fields = ['id', 'name', 'price', 'description', 'images', 'stock_quantity', 'category']
 
 
 class UpdateProductSerializer(serializers.ModelSerializer):
@@ -44,8 +53,8 @@ class ReviewSerializer(serializers.ModelSerializer):
         fields = ['id', 'customer', 'summary', 'details', 'rating', 'date']
 
     def create(self, validated_data):
-        product_id = self.context['product_id']
-        return Review.objects.create(product_id=product_id, **validated_data)
+        product_pk = self.context['product_pk']
+        return Review.objects.create(product_id=product_pk, **validated_data)
     
 
 class CartItemProductSerializer(serializers.ModelSerializer):
@@ -112,52 +121,15 @@ class CartSerializer(serializers.ModelSerializer):
     
 
 class CustomerSerializer(serializers.ModelSerializer):
-    user_id = serializers.IntegerField()
+    first_name = serializers.SerializerMethodField()
+    last_name = serializers.SerializerMethodField()
+
     class Meta:
         model = Customer
-        fields = ['id', 'user_id', 'phone', 'birth_date']
-
-
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['id', 'username', 'email', 'first_name', 'last_name']
-
-
-class RegisterSerializer(serializers.ModelSerializer):
-    # Email required and unique amongst all User objects
-    email = serializers.EmailField(
-        required=True,
-        validators=[UniqueValidator(queryset=User.objects.all())]
-    )
-    # Password is write only and should be a valid password
-    password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
-    password2 = serializers.CharField(write_only=True, required=True)
-
-    class Meta:
-        model = User
-        fields = ['id', 'username', 'email', 'password', 'password2', 'first_name', 'last_name']
-        fields = ['id', 'username', 'password', 'email', 'first_name', 'last_name']
-        # Firstname and Lastname fields are required
-        extra_kwargs = {
-            'first_name': {'required': True},
-            'last_name': {'required': True}
-        }
-
-    def validate(self, attrs):
-        if attrs['password'] != attrs['password2']:
-            raise serializers.ValidationError({'password': 'Passwords do not match'})
-        return attrs
-
-
-    def create(self, validated_data):
-        user = User.objects.create(
-            username=validated_data['username'],
-            email=validated_data['email'],
-            first_name=validated_data['first_name'],
-            last_name=['last_name']
-        )
-        user.set_password(validated_data['password'])
-        user.save()
-
-        return user
+        fields = ['id', 'first_name', 'last_name', 'phone', 'birth_date']
+    
+    def get_first_name(self, customer):
+        return customer.user.first_name
+    
+    def get_last_name(self, customer):
+        return customer.user.last_name

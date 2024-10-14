@@ -1,9 +1,8 @@
-from typing import Iterable
-from django.db import models
-from django.core import validators
-from django.core.validators import MinValueValidator, MaxValueValidator
-from django.contrib.auth.models import AbstractUser
 from uuid import uuid4
+from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
+from authsys.models import User
+from .validators import validate_file_size
 # Create your models here.
 
 
@@ -24,7 +23,6 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='products')
     stock_quantity = models.IntegerField(validators=[MinValueValidator(0)])
     created_date = models.DateField(auto_now=True)
-    imageurl = models.URLField(max_length=255, null=True, blank=True)
     discount = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True, default=0)
 
     def __str__(self):
@@ -36,11 +34,11 @@ class Product(models.Model):
             discount_factor = (100 - float(self.discount))/100
             return round(self.price * discount_factor, 2)
         return self.price
-
-
-class User(AbstractUser):
-    email = models.EmailField(unique=True)
     
+
+class ProductImage(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to='store/images', validators=[validate_file_size])
 
 class Customer(models.Model):
     MEMBERSHIP_BRONZE = 'B'
