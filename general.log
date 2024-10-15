@@ -10,3 +10,128 @@ Watching for file changes with StatReloader
 2024-10-14 14:35:41,141 (WARNING) - django.request - Not Found: /
 2024-10-14 14:40:39,396 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader
 2024-10-14 16:24:03,615 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader
+2024-10-15 11:12:25,495 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader
+2024-10-15 11:12:37,468 (WARNING) - django.request - Not Found: /
+2024-10-15 11:12:53,667 (INFO) - django.utils.autoreload - /home/abdulhakeem/alx/project/django/e-commerce/e_commerce/urls.py changed, reloading.
+2024-10-15 11:12:54,169 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader
+2024-10-15 11:12:56,495 (INFO) - django.utils.autoreload - /home/abdulhakeem/alx/project/django/e-commerce/e_commerce/urls.py changed, reloading.
+2024-10-15 11:12:56,969 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader
+2024-10-15 11:12:59,257 (INFO) - django.utils.autoreload - /home/abdulhakeem/alx/project/django/e-commerce/e_commerce/urls.py changed, reloading.
+2024-10-15 11:12:59,701 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader
+2024-10-15 11:13:00,939 (INFO) - django.utils.autoreload - /home/abdulhakeem/alx/project/django/e-commerce/e_commerce/urls.py changed, reloading.
+2024-10-15 11:13:01,355 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader
+2024-10-15 11:13:05,730 (INFO) - django.utils.autoreload - /home/abdulhakeem/alx/project/django/e-commerce/e_commerce/urls.py changed, reloading.
+2024-10-15 11:13:06,187 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader
+2024-10-15 11:13:07,437 (INFO) - django.utils.autoreload - /home/abdulhakeem/alx/project/django/e-commerce/e_commerce/urls.py changed, reloading.
+2024-10-15 11:13:07,895 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader
+2024-10-15 11:13:10,253 (INFO) - django.utils.autoreload - /home/abdulhakeem/alx/project/django/e-commerce/e_commerce/urls.py changed, reloading.
+2024-10-15 11:13:10,693 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader
+2024-10-15 11:13:17,091 (INFO) - django.utils.autoreload - /home/abdulhakeem/alx/project/django/e-commerce/e_commerce/urls.py changed, reloading.
+2024-10-15 11:13:17,507 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader
+2024-10-15 11:13:23,941 (INFO) - django.utils.autoreload - /home/abdulhakeem/alx/project/django/e-commerce/e_commerce/urls.py changed, reloading.
+2024-10-15 11:13:24,400 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader
+2024-10-15 11:13:25,660 (INFO) - django.utils.autoreload - /home/abdulhakeem/alx/project/django/e-commerce/e_commerce/urls.py changed, reloading.
+2024-10-15 11:13:26,104 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader
+2024-10-15 11:13:28,366 (INFO) - django.utils.autoreload - /home/abdulhakeem/alx/project/django/e-commerce/e_commerce/urls.py changed, reloading.
+2024-10-15 11:13:28,783 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader
+2024-10-15 11:13:35,222 (INFO) - django.utils.autoreload - /home/abdulhakeem/alx/project/django/e-commerce/e_commerce/urls.py changed, reloading.
+2024-10-15 11:13:35,654 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader
+2024-10-15 11:13:44,231 (INFO) - django.utils.autoreload - /home/abdulhakeem/alx/project/django/e-commerce/e_commerce/urls.py changed, reloading.
+2024-10-15 11:13:44,708 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader
+2024-10-15 11:13:45,990 (INFO) - django.utils.autoreload - /home/abdulhakeem/alx/project/django/e-commerce/e_commerce/urls.py changed, reloading.
+2024-10-15 11:13:46,466 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader
+2024-10-15 11:13:48,846 (INFO) - django.utils.autoreload - /home/abdulhakeem/alx/project/django/e-commerce/e_commerce/urls.py changed, reloading.
+2024-10-15 11:13:49,375 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader
+2024-10-15 11:13:50,835 (INFO) - django.utils.autoreload - /home/abdulhakeem/alx/project/django/e-commerce/e_commerce/urls.py changed, reloading.
+2024-10-15 11:13:51,343 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader
+2024-10-15 11:13:52,594 (INFO) - django.utils.autoreload - /home/abdulhakeem/alx/project/django/e-commerce/e_commerce/urls.py changed, reloading.
+2024-10-15 11:13:53,117 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader
+2024-10-15 11:13:54,591 (INFO) - django.utils.autoreload - /home/abdulhakeem/alx/project/django/e-commerce/e_commerce/urls.py changed, reloading.
+2024-10-15 11:13:55,030 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader
+2024-10-15 11:13:58,395 (INFO) - django.utils.autoreload - /home/abdulhakeem/alx/project/django/e-commerce/e_commerce/urls.py changed, reloading.
+2024-10-15 11:13:58,859 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader
+2024-10-15 11:14:01,168 (INFO) - django.utils.autoreload - /home/abdulhakeem/alx/project/django/e-commerce/e_commerce/urls.py changed, reloading.
+2024-10-15 11:14:01,610 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader
+2024-10-15 11:14:05,928 (INFO) - django.utils.autoreload - /home/abdulhakeem/alx/project/django/e-commerce/e_commerce/urls.py changed, reloading.
+2024-10-15 11:14:06,392 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader
+2024-10-15 11:14:14,926 (INFO) - django.utils.autoreload - /home/abdulhakeem/alx/project/django/e-commerce/e_commerce/urls.py changed, reloading.
+2024-10-15 11:14:15,354 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader
+2024-10-15 11:14:18,901 (ERROR) - django.request - Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/abdulhakeem/.local/share/virtualenvs/e-commerce-VvqHCreP/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/abdulhakeem/.local/share/virtualenvs/e-commerce-VvqHCreP/lib/python3.12/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+               ^^^^^^^^^^^^^^^^^
+  File "/home/abdulhakeem/.local/share/virtualenvs/e-commerce-VvqHCreP/lib/python3.12/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/abdulhakeem/.local/share/virtualenvs/e-commerce-VvqHCreP/lib/python3.12/site-packages/django/template/response.py", line 90, in rendered_content
+    template = self.resolve_template(self.template_name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/abdulhakeem/.local/share/virtualenvs/e-commerce-VvqHCreP/lib/python3.12/site-packages/django/template/response.py", line 72, in resolve_template
+    return select_template(template, using=self.using)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/abdulhakeem/.local/share/virtualenvs/e-commerce-VvqHCreP/lib/python3.12/site-packages/django/template/loader.py", line 47, in select_template
+    raise TemplateDoesNotExist(", ".join(template_name_list), chain=chain)
+django.template.exceptions.TemplateDoesNotExist: store/index.html
+2024-10-15 11:14:52,509 (INFO) - django.utils.autoreload - /home/abdulhakeem/alx/project/django/e-commerce/e_commerce/urls.py changed, reloading.
+2024-10-15 11:14:53,070 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader
+2024-10-15 11:17:33,522 (WARNING) - django.request - Not Found: /{ url static.styles.css}
+2024-10-15 11:17:42,799 (WARNING) - django.request - Not Found: /{ url static/styles.css}
+2024-10-15 11:17:45,031 (WARNING) - django.request - Not Found: /{ url static/styles.css}
+2024-10-15 11:20:07,884 (ERROR) - django.request - Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/abdulhakeem/.local/share/virtualenvs/e-commerce-VvqHCreP/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/abdulhakeem/.local/share/virtualenvs/e-commerce-VvqHCreP/lib/python3.12/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+               ^^^^^^^^^^^^^^^^^
+  File "/home/abdulhakeem/.local/share/virtualenvs/e-commerce-VvqHCreP/lib/python3.12/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/abdulhakeem/.local/share/virtualenvs/e-commerce-VvqHCreP/lib/python3.12/site-packages/django/template/response.py", line 90, in rendered_content
+    template = self.resolve_template(self.template_name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/abdulhakeem/.local/share/virtualenvs/e-commerce-VvqHCreP/lib/python3.12/site-packages/django/template/response.py", line 72, in resolve_template
+    return select_template(template, using=self.using)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/abdulhakeem/.local/share/virtualenvs/e-commerce-VvqHCreP/lib/python3.12/site-packages/django/template/loader.py", line 47, in select_template
+    raise TemplateDoesNotExist(", ".join(template_name_list), chain=chain)
+django.template.exceptions.TemplateDoesNotExist: index.html
+2024-10-15 11:20:16,924 (INFO) - django.utils.autoreload - /home/abdulhakeem/alx/project/django/e-commerce/e_commerce/urls.py changed, reloading.
+2024-10-15 11:20:17,436 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader
+2024-10-15 11:20:20,017 (INFO) - django.utils.autoreload - /home/abdulhakeem/alx/project/django/e-commerce/e_commerce/urls.py changed, reloading.
+2024-10-15 11:20:20,518 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader
+2024-10-15 11:20:24,284 (WARNING) - django.request - Not Found: /{ url static/styles.css}
+2024-10-15 11:21:28,490 (WARNING) - django.request - Not Found: /{ url static/styles.css}
+2024-10-15 11:22:20,647 (WARNING) - django.request - Not Found: /{ url static 'store/styles.css'}
+2024-10-15 11:25:13,258 (INFO) - django.utils.autoreload - /home/abdulhakeem/alx/project/django/e-commerce/e_commerce/settings.py changed, reloading.
+2024-10-15 11:25:13,867 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader
+2024-10-15 11:25:17,295 (WARNING) - django.request - Not Found: /{ url static 'store/styles.css'}
+2024-10-15 11:25:24,827 (INFO) - django.utils.autoreload - /home/abdulhakeem/alx/project/django/e-commerce/e_commerce/settings.py changed, reloading.
+2024-10-15 11:25:25,381 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader
+2024-10-15 11:25:26,530 (WARNING) - django.request - Not Found: /{ url static 'store/styles.css'}
+2024-10-15 11:25:29,561 (WARNING) - django.request - Not Found: /{ url static 'store/styles.css'}
+2024-10-15 11:25:56,977 (INFO) - django.utils.autoreload - /home/abdulhakeem/alx/project/django/e-commerce/e_commerce/settings.py changed, reloading.
+2024-10-15 11:25:57,441 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader
+2024-10-15 11:26:01,665 (WARNING) - django.request - Not Found: /{ url static 'store/styles.css'}
+2024-10-15 11:26:03,080 (WARNING) - django.request - Not Found: /{ url static 'store/styles.css'}
+2024-10-15 11:26:24,069 (WARNING) - django.request - Not Found: /{ url static 'store/styles.css'}
+2024-10-15 11:26:25,861 (WARNING) - django.request - Not Found: /{ url static 'store/styles.css'}
+2024-10-15 11:26:57,045 (WARNING) - django.request - Not Found: /{ url 'store/styles.css'}
+2024-10-15 11:42:04,945 (INFO) - django.utils.autoreload - /home/abdulhakeem/alx/project/django/e-commerce/e_commerce/settings.py changed, reloading.
+2024-10-15 11:42:05,418 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader
+2024-10-15 11:42:08,936 (INFO) - django.utils.autoreload - /home/abdulhakeem/alx/project/django/e-commerce/e_commerce/settings.py changed, reloading.
+2024-10-15 11:42:09,377 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader
+2024-10-15 11:45:35,338 (INFO) - django.utils.autoreload - /home/abdulhakeem/alx/project/django/e-commerce/e_commerce/settings.py changed, reloading.
+2024-10-15 11:45:35,814 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader
+2024-10-15 11:45:37,350 (INFO) - django.utils.autoreload - /home/abdulhakeem/alx/project/django/e-commerce/e_commerce/settings.py changed, reloading.
+2024-10-15 11:45:37,923 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader
+2024-10-15 11:45:41,564 (INFO) - django.utils.autoreload - /home/abdulhakeem/alx/project/django/e-commerce/e_commerce/settings.py changed, reloading.
+2024-10-15 11:46:47,387 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader
+2024-10-15 11:47:20,629 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader
+2024-10-15 11:51:12,304 (WARNING) - django.request - Not Found: /favicon.ico
+2024-10-15 11:52:07,730 (INFO) - django.utils.autoreload - Watching for file changes with StatReloader

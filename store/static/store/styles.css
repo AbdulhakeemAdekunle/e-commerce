@@ -1,0 +1,16 @@
+body {
+    background-color: rgb(228, 158, 53);
+    margin: 0;
+}
+
+.banner {
+    width: 60em;
+}
+  
+  .home-page { 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+  }
