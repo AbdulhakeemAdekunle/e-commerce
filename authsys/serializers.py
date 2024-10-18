@@ -2,9 +2,9 @@ from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from authsys.models import User
-from djoser.serializers import UserCreateSerializer
 
 
+# RegisterSerializer class, that handles the api endpoint for POST requests: auth/register
 class RegisterSerializer(serializers.ModelSerializer):
     # Email required and unique amongst all User objects
     email = serializers.EmailField(

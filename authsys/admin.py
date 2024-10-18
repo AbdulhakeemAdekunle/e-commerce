@@ -4,6 +4,8 @@ from . import models
 
 # Register your models here.
 
+
+# Register the UserModel on the admin interface
 @admin.register(models.User)
 class UserAdmin(BaseUserAdmin):
     add_fieldsets = (
